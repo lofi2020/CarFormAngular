@@ -60,7 +60,6 @@ export class CarComponent implements OnInit {
       {
         next: (car : Car) => {
           this.selectedCar = car;
-          this.showAlert("Neuer Datensatz wurde erfolgreich hinzugefügt", 'success');
         },
         error: (error) => {
           console.error(error.message);
