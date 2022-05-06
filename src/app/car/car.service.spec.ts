@@ -4,7 +4,6 @@ import {  HttpClientModule, HttpResponse } from '@angular/common/http';
 import { CarService } from './car.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-
 const dummyCars: Car[] =
 [
   {
@@ -34,22 +33,15 @@ describe('CarService', () => {
   });
 
   it('should retrieve cars form the API via GET', () => {
-
-
     //expect(service).toBeTruthy();
     service.getCars().subscribe(cars => {
       expect(cars.length).toBe(2);
       expect(cars).toEqual(dummyCars);
     }
     );
-
     const request = httpMock.expectOne(service.baseUrl);
     expect(request.request.method).toBe('GET');
     request.flush(dummyCars);
-
-
   });
-
-
 }
 );
