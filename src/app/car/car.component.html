@@ -1,103 +1,103 @@
+
+
 <div id="alert" role="alert"></div>
 <div id="main-container" class="container">
-  </div>
-    <div class="card">
+   <div class="card">
       <div style="padding: 20px;">
-        <div class="float-left">
-          <div class="btn-toolbar">
-          <button type="button" id="AddBtn" class="btn btn-primary mr-2 mb-2" (click)="onOpenModal('add')" >+ Neues Fahrzeug</button>
-          <button type="button" id="refreshBtn" class="btn btn-info mr-2 mb-2" (click)="onRefresh()" >Aktualisieren</button>
-          </div>
-        </div>
-        <div class="float-right">
-          <input type="text" value="searchText" [(ngModel)]="searchText" (change)="onFilter()"/>
-          <button (click)="onFilter()">Suchen</button>
-        </div>
+         <div class="float-left">
+            <div class="btn-toolbar">
+               <button type="button" id="AddBtn" class="btn btn-primary mr-2 mb-2" (click)="onOpenModal('add')" >+ Neues Fahrzeug</button>
+               <button type="button" id="refreshBtn" class="btn btn-info mr-2 mb-2" (click)="onRefresh()" >Aktualisieren</button>
+            </div>
+         </div>
+         <div class="float-right">
+            <input type="text" value="searchText" [(ngModel)]="searchText" (change)="onFilter()"/>
+            <button (click)="onFilter()">Suchen</button>
+         </div>
       </div>
       <div class="card-body">
-        <table class="table" id="edit-table">
-          <thead>
-            <th>Id</th>
-            <th>Kennzeichen</th>
-            <th>FIN</th>
-            <th>Niederlassung</th>
-            <th>Aktionen</th>
-          </thead>
-          <tbody>
-            <tr *ngFor="let car of filteredCars" [ngClass]="{'highlight': car === selectedCar}">
-             <td>{{car.id}}</td>
-             <td>{{car.sign}}</td>
-             <td>{{car.fin}}</td>
-             <td>{{car.branch}}</td>
-             <td>
-              <div class="btn-group" role="group">
-                <button type="button" id="editBtn" (click)="onOpenModal('show', car)" class="btn btn-secondary tooltips">Details</button>
-                <button type="button" id="editBtn" (click)="onOpenModal('edit', car)" class="btn btn-success tooltips">Bearbeiten</button>
-                <button type="button" id="deleteBtn" (click)="onOpenModal('delete', car)" class="btn btn-danger tooltips">Löschen</button>
-              </div>
-             </td>
-            </tr>
-          </tbody>
-        </table>
+         <table class="table" id="edit-table">
+            <thead>
+               <th>Id</th>
+               <th>Kennzeichen</th>
+               <th>FIN</th>
+               <th>Niederlassung</th>
+               <th>Aktionen</th>
+            </thead>
+            <tbody>
+               <tr *ngFor="let car of filteredCars" [ngClass]="{'highlight': car === selectedCar}">
+               <td>{{car.id}}</td>
+               <td>{{car.sign}}</td>
+               <td>{{car.fin}}</td>
+               <td>{{car.branch}}</td>
+               <td>
+                  <div class="btn-group" role="group">
+                     <button type="button" id="editBtn" (click)="onOpenModal('show', car)" class="btn btn-secondary tooltips">Details</button>
+                     <button type="button" id="editBtn" (click)="onOpenModal('edit', car)" class="btn btn-success tooltips">Bearbeiten</button>
+                     <button type="button" id="deleteBtn" (click)="onOpenModal('delete', car)" class="btn btn-danger tooltips">Löschen</button>
+                  </div>
+               </td>
+               </tr>
+            </tbody>
+         </table>
       </div>
-    </div>
-
-
+   </div>
+</div>
 <button style="display:none;" id="openDlgBtn" type="button" class="hidden btn btn-primary" data-toggle="modal" data-target="#carDlg" >Open Dialog</button>
 <div id="carDlg" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <form [formGroup]="carForm">
-      <div class="modal-header">
-        <h5 *ngIf="currentMode==='add'" class="modal-title">Neues Fahrzeug</h5>
-        <h5 *ngIf="currentMode==='edit'">Bearbeiten</h5>
-        <h5 *ngIf="currentMode==='show'">Details</h5>
-        <button id="closeModalButton" type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <form [formGroup]="carForm">
+            <div class="modal-header">
+               <h5 *ngIf="currentMode==='add'" class="modal-title">Neues Fahrzeug</h5>
+               <h5 *ngIf="currentMode==='edit'">Bearbeiten</h5>
+               <h5 *ngIf="currentMode==='show'">Details</h5>
+               <button id="closeModalButton" type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <div style="display:none" id="editMessage" role="alert" ></div>
+               <input type="hidden" formControlName="id" id="id" />
+               <div class="form-group">
+                  <label for="sign">Kennzeichen*</label>
+                  <input formControlName="sign" id="sign" class="form-control"  />
+               </div>
+               <div class="form-group">
+                  <label for="fin">FIN*</label>
+                  <input formControlName="fin" id="fin"  class="form-control" />
+               </div>
+               <div class="form-group">
+                  <label for="branch">Niederlassung*</label>
+                  <input formControlName="branch" id="branch"  class="form-control"/>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-warning" (click)="onReset()"  *ngIf="currentMode!=='show'" >Zurücksetzen</button>
+               <button class="btn btn-success" *ngIf="currentMode==='edit'" (click)="onUpdateCar()"  [disabled]="!carForm.valid">Aktualisieren</button>
+               <button class="btn btn-primary" *ngIf="currentMode==='add'" (click)="onCreateCar()" [disabled]="!carForm.valid">Hinzufügen</button>
+               <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+            </div>
+         </form>
       </div>
-      <div class="modal-body">
-        <div style="display:none" id="editMessage" role="alert" ></div>
-        <input type="hidden" formControlName="id" id="id" />
-        <div class="form-group">
-         <label for="sign">Kennzeichen*</label>
-         <input formControlName="sign" id="sign" class="form-control"  />
-        </div>
-        <div class="form-group">
-         <label for="fin">FIN*</label>
-         <input formControlName="fin" id="fin"  class="form-control" />
-        </div>
-        <div class="form-group">
-         <label for="branch">Niederlassung*</label>
-         <input formControlName="branch" id="branch"  class="form-control"/>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-warning" (click)="onReset()"  *ngIf="currentMode!=='show'" >Zurücksetzen</button>
-        <button class="btn btn-success" *ngIf="currentMode==='edit'" (click)="onUpdateCar()"  [disabled]="!carForm.valid">Aktualisieren</button>
-        <button class="btn btn-primary" *ngIf="currentMode==='add'" (click)="onCreateCar()" [disabled]="!carForm.valid">Hinzufügen</button>
-        <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-      </div>
-    </form>
-    </div>
-  </div>
+   </div>
 </div>
 <div id="deleteConfirmDlg" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>Bestätigung</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Schließen">
-          <span aria-hidden="true">&times;</span>
-        </button>
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5>Bestätigung</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Schließen">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            Sind Sie sicher, den Datensatz zu löschen?
+         </div>
+         <div class="modal-footer">
+            <button class="btn btn-danger" *ngIf="currentMode==='delete'" data-dismiss="modal" (click)="onDeleteCar()">Löschen</button>
+            <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+         </div>
       </div>
-      <div class="modal-body">
-       Sind Sie sicher, den Datensatz zu löschen?
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-danger" *ngIf="currentMode==='delete'" data-dismiss="modal" (click)="onDeleteCar()">Löschen</button>
-        <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-      </div>
-    </div>
-  </div>
+   </div>
 </div>
