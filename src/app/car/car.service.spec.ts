@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Car } from './car.model';
 import { TestBed } from '@angular/core/testing';
 import {  HttpClientModule, HttpResponse } from '@angular/common/http';
@@ -39,7 +40,7 @@ describe('CarService', () => {
       expect(cars).toEqual(dummyCars);
     }
     );
-    const request = httpMock.expectOne(service.baseUrl);
+    const request = httpMock.expectOne(environment.baseUrl);
     expect(request.request.method).toBe('GET');
     request.flush(dummyCars);
   });

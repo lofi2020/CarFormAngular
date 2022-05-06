@@ -9,8 +9,6 @@ import { environment } from 'src/environments/environment';
 })
 export class CarService {
 
-  public baseUrl = "http://localhost:8080/cars";
-
   constructor(private http: HttpClient) {  }
 
   getCars(): Observable<Car[]> {
