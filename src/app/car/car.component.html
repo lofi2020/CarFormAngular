@@ -32,7 +32,7 @@
                <td>{{car.branch}}</td>
                <td>
                   <div class="btn-group" role="group">
-                     <button type="button" id="editBtn" (click)="onOpenModal('show', car)" class="btn btn-secondary tooltips">Details</button>
+                     <button type="button" id="showBtn" (click)="onOpenModal('show', car)" class="btn btn-secondary tooltips">Details</button>
                      <button type="button" id="editBtn" (click)="onOpenModal('edit', car)" class="btn btn-success tooltips">Bearbeiten</button>
                      <button type="button" id="deleteBtn" (click)="onOpenModal('delete', car)" class="btn btn-danger tooltips">Löschen</button>
                   </div>
@@ -76,7 +76,7 @@
                <button class="btn btn-warning" (click)="onReset()"  *ngIf="currentMode!=='show'" >Zurücksetzen</button>
                <button class="btn btn-success" *ngIf="currentMode==='edit'" (click)="onUpdateCar()"  [disabled]="!carForm.valid">Aktualisieren</button>
                <button class="btn btn-primary" *ngIf="currentMode==='add'" (click)="onCreateCar()" [disabled]="!carForm.valid">Hinzufügen</button>
-               <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+               <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
             </div>
          </form>
       </div>
@@ -96,7 +96,7 @@
          </div>
          <div class="modal-footer">
             <button class="btn btn-danger" *ngIf="currentMode==='delete'" data-dismiss="modal" (click)="onDeleteCar()">Löschen</button>
-            <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+            <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
          </div>
       </div>
    </div>
