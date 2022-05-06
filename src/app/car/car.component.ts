@@ -60,6 +60,7 @@ export class CarComponent implements OnInit {
       {
         next: (car : Car) => {
           this.selectedCar = car;
+          this.showAlert("Neuer Datensatz wurde geladen", 'success');
         },
         error: (error) => {
           console.error(error.message);
@@ -67,14 +68,19 @@ export class CarComponent implements OnInit {
         }
       }
     );
-
   }
 
+  /**
+   * Refresh table by clicking on refresh button
+   */
   onRefresh(): void {
     this.selectedCar = undefined;
     this.loadCars();
   }
 
+   /**
+   * Open Dialog by clicking on the buttons to add/edit/delete/show car
+   */
   onOpenModal(mode: string, car?: Car) {
     this.currentMode = mode;
     const button = document.getElementById('openDlgBtn');
@@ -103,6 +109,9 @@ export class CarComponent implements OnInit {
     button!.click();
   }
 
+   /**
+   * Reset form clicking on the reset button
+   */
   onReset(): void {
     if (this.currentMode == 'edit') {
       this.updateForm();
@@ -130,6 +139,9 @@ export class CarComponent implements OnInit {
   });
   }
 
+  /**
+   * Create car by clicking on the create button
+   */
   onCreateCar(): void {
     const car = this.carForm.getRawValue();
     this.carService.createCar(car).subscribe(
@@ -148,6 +160,9 @@ export class CarComponent implements OnInit {
     );
   }
 
+  /**
+   * Delete car by clicking on the delete button
+   */
   onDeleteCar(): void {
     this.carService.deleteCar(this.selectedCar?.id!).subscribe(
       {
@@ -163,7 +178,9 @@ export class CarComponent implements OnInit {
     );
   }
 
-
+  /**
+   * Filter cars by clicking on search button or entering search field
+   */
   onFilter(): void {
     if(this.searchText){
       console.log("Filter..." + this.searchText);
@@ -179,7 +196,7 @@ export class CarComponent implements OnInit {
   }
 
   /**
-   * Show message with content and type
+   * Show alert with content and type after closing form
    * @param message
    * @param type
    */
@@ -193,23 +210,18 @@ export class CarComponent implements OnInit {
     }, 4000)
   }
 
-    /**
-   * Show message with content and type
+  /**
+   * Show message with content and type while editing form
    * @param message
    * @param type
    */
-     showMessage(message: string, type: string): void {
-      const alert = document.getElementById('editMessage');
-      alert!.textContent = message;
-      alert!.setAttribute('class', 'alert alert-' + type);
-      alert!.setAttribute('style', 'display:block;');
-      setTimeout(() => {
-        alert!.setAttribute('style', 'display:none;');
-      }, 3000)
-    }
-
+  showMessage(message: string, type: string): void {
+    const alert = document.getElementById('editMessage');
+    alert!.textContent = message;
+    alert!.setAttribute('class', 'alert alert-' + type);
+    alert!.setAttribute('style', 'display:block;');
+    setTimeout(() => {
+      alert!.setAttribute('style', 'display:none;');
+    }, 3000)
+  }
 }
-
-
-
-

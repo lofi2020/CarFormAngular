@@ -24,7 +24,7 @@
             <th>Aktionen</th>
           </thead>
           <tbody>
-            <tr *ngFor="let car of filteredCars" [ngClass]="{'highlight': car == selectedCar}">
+            <tr *ngFor="let car of filteredCars" [ngClass]="{'highlight': car === selectedCar}">
              <td>{{car.id}}</td>
              <td>{{car.sign}}</td>
              <td>{{car.fin}}</td>
@@ -49,9 +49,9 @@
     <div class="modal-content">
       <form [formGroup]="carForm">
       <div class="modal-header">
-        <h5 *ngIf="currentMode=='add'" class="modal-title">Neues Fahrzeug</h5>
-        <h5 *ngIf="currentMode=='edit'">Bearbeiten</h5>
-        <h5 *ngIf="currentMode=='show'">Details</h5>
+        <h5 *ngIf="currentMode==='add'" class="modal-title">Neues Fahrzeug</h5>
+        <h5 *ngIf="currentMode==='edit'">Bearbeiten</h5>
+        <h5 *ngIf="currentMode==='show'">Details</h5>
         <button id="closeModalButton" type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -73,9 +73,9 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-warning" (click)="onReset()"  *ngIf="currentMode!='show'" >Zurücksetzen</button>
-        <button class="btn btn-success" *ngIf="currentMode=='edit'" (click)="onUpdateCar()"  [disabled]="!carForm.valid">Aktualisieren</button>
-        <button class="btn btn-primary" *ngIf="currentMode=='add'" (click)="onCreateCar()" [disabled]="!carForm.valid">Hinzufügen</button>
+        <button class="btn btn-warning" (click)="onReset()"  *ngIf="currentMode!=='show'" >Zurücksetzen</button>
+        <button class="btn btn-success" *ngIf="currentMode==='edit'" (click)="onUpdateCar()"  [disabled]="!carForm.valid">Aktualisieren</button>
+        <button class="btn btn-primary" *ngIf="currentMode==='add'" (click)="onCreateCar()" [disabled]="!carForm.valid">Hinzufügen</button>
         <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
       </div>
     </form>
@@ -95,11 +95,9 @@
        Sind Sie sicher, den Datensatz zu löschen?
       </div>
       <div class="modal-footer">
-        <button class="btn btn-danger" *ngIf="currentMode=='delete'" data-dismiss="modal" (click)="onDeleteCar()">Löschen</button>
+        <button class="btn btn-danger" *ngIf="currentMode==='delete'" data-dismiss="modal" (click)="onDeleteCar()">Löschen</button>
         <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
       </div>
     </div>
   </div>
 </div>
-
-
